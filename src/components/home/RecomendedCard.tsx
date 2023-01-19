@@ -7,24 +7,36 @@ import {
 } from 'react-native';
 import React from 'react';
 
-const {height, width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
-const RecomendedCard = () => {
+interface cardProps {
+  img: string;
+  name: string;
+  desc: string;
+  price: string;
+}
+
+const RecomendedCard = (data: cardProps) => {
   return (
     <View style={styles.main}>
       <View style={styles.imgContainer}>
         <ImageBackground
           source={{
-            uri: 'https://images.unsplash.com/photo-1504898770365-14faca6a7320?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzl8fG11c2ljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+            uri: data.img,
           }}
+          resizeMode="contain"
           style={styles.img}
         />
       </View>
       <View style={styles.content}>
-        <Text style={styles.heading}>Evan Haris, Jazz Tenor Saxophone</Text>
-        <Text style={styles.subtitle}>60 Lincoln plaza, NY</Text>
-        <View style={styles.footer}>
-          <Text style={styles.date}>28 May</Text>
+        <Text style={[styles.heading, {marginBottom: 5}]} numberOfLines={2}>
+          {data.name}
+        </Text>
+        <Text style={styles.subtitle} numberOfLines={3}>
+          {data.desc}
+        </Text>
+        <View style={[styles.footer, {marginTop: 5}]}>
+          <Text style={styles.price}>{`₹ ${data.price}`}</Text>
           <View style={styles.footerRight}>
             <View style={styles.groupAvatars}>
               <View
@@ -73,7 +85,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minHeight: height * 0.15,
     padding: 5,
-    margin: 20,
     borderRadius: 20,
     backgroundColor: '#ededed',
   },
@@ -105,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  date: {
+  price: {
     fontWeight: 'bold',
     fontSize: 16,
   },

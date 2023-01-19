@@ -1,12 +1,23 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {connectSearchBox} from 'react-instantsearch-native';
 
-export default function SearchBox(): JSX.Element {
+interface componentProps {
+  currentRefinement: string;
+  refine: (value: string) => {};
+}
+
+function MySearchComponent({
+  currentRefinement,
+  refine,
+}: componentProps): JSX.Element {
   return (
     <View style={styles.searchContainer}>
       <TextInput
+        value={currentRefinement}
+        onChangeText={value => refine(value)}
         theme={{roundness: 20}}
         style={styles.textField}
         mode="outlined"
@@ -31,6 +42,10 @@ export default function SearchBox(): JSX.Element {
   );
 }
 
+const SearchBox = connectSearchBox(MySearchComponent);
+
+export default SearchBox;
+
 const styles = StyleSheet.create({
   searchContainer: {
     flex: 1,
@@ -38,7 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingHorizontal: 20,
-    paddingBottom: 100
+    paddingBottom: 100,
   },
   textField: {
     flex: 1,

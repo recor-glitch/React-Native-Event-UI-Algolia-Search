@@ -21,6 +21,7 @@ export default Content;
 
 const styles = StyleSheet.create({
   main: {
+    flex: 1,
     paddingHorizontal: 20,
   },
   HeaderContainer: {
